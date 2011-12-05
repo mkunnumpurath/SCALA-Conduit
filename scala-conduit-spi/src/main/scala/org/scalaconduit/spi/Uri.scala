@@ -5,7 +5,7 @@ class Uri(original: String) {
     val address : String = original
     var callback : (Object) => Object = null
     
-    def receive (callback: (Object) => Object) = {
+    def << (callback: (Object) => Object) = {
         this.callback = callback
         val messageReceptor = ConduitServer.getMessageReceptor(address)
         messageReceptor.receive(this)
@@ -16,16 +16,8 @@ class Uri(original: String) {
         println(response)
     }
 
-    def send (payload: Object) : Object = {
+    def >> (payload: Object) : Object = {
         payload
-    }
-
-    def ensure (intent: String) : Uri = {
-        this
-    }
-
-    def and (intent: String) : Uri = {
-        this
     }
 
 }
