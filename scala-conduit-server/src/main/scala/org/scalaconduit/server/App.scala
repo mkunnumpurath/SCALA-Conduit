@@ -11,7 +11,7 @@ object App {
         
         start()
         register("jms", new JmsMessageReceptor())
-        new Runner()
+        new TestScript()
         stop()
         
     }

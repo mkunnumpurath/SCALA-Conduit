@@ -1,10 +1,9 @@
 package org.scalaconduit.server
 
 import org.scalaconduit.spi.Uri
+import org.scalaconduit.spi.IntegrationScript
 
-class Runner {
-
-    implicit def uri(x: String) = new Uri(x)
+class TestScript extends IntegrationScript {
 
     "jms:stockTicker" << { "jms:engineQueue" >> _ }
 
