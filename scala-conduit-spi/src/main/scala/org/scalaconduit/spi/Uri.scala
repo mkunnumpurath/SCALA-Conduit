@@ -10,7 +10,6 @@ class Uri(original: String) {
     }
 
     def >> (payload: Object) : Object = {
-        println(payload)
         payload
     }
 

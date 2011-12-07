@@ -5,6 +5,9 @@ import org.scalaconduit.spi.IntegrationScript
 
 class TestScript extends IntegrationScript {
 
-    "jms:stockTicker" << { "jms:engineQueue" >> _ }
+    "jms:stockTicker" <<  { payload => 
+        println("********** tace " + payload)
+        "jms:engineQueue" >> payload 
+     }
 
 }
