@@ -11,8 +11,7 @@ object App {
         
         start()
         register("jms", new JmsMessageReceptor())
-        val runner = new Runner()
-        runner.run()
+        new Runner()
         stop()
         
     }

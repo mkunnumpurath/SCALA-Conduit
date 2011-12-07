@@ -6,6 +6,6 @@ class Runner {
 
     implicit def uri(x: String) = new Uri(x)
 
-    def run() = "jms:stockTicker" << { "jms:engine-queue" >> _ }
+    "jms:stockTicker" << { "jms:engineQueue" >> _ }
 
 }
