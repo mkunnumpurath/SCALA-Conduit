@@ -2,6 +2,6 @@ package org.scalaconduit.spi
 
 trait MessageReceptor {
     
-    def receive(uri : Uri, callback: (Object) => Object)
+    def receive(endpoint : Endpoint, callback: (Object) => Object)
 
 }

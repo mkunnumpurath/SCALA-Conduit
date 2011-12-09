@@ -1,15 +1,15 @@
 package org.scalaconduit.spi
 
-class Uri(original: String) {
+class Endpoint(original: String) {
     
     val address : String = original
     
-    def << (callback: (Object) => Object) = {
+    def receive (callback: (Object) => Object) = {
         val messageReceptor = ConduitServer.getMessageReceptor(address)
         messageReceptor.receive(this, callback)
     }
 
-    def >> (payload: Object) : Object = {
+    def send (payload: Object) : Object = {
         payload
     }
 
