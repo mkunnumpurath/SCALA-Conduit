@@ -4,7 +4,7 @@ import org.scalaconduit.spi._
 
 class JmsMessageReceptor extends MessageReceptor {
     
-    override def receive(uri : Endpoint, callback: (Object) => Object)  = {
+    override def receive(uri : Endpoint, callback: (AnyRef) => AnyRef)  = {
         val response = callback("Meeraj")
         println(response)
     }

@@ -4,12 +4,12 @@ class Endpoint(original: String) {
     
     val address : String = original
     
-    def << (callback: (Object) => Object) = {
+    def << (callback: (AnyRef) => AnyRef) = {
         val messageReceptor = ConduitServer.getMessageReceptor(address)
         messageReceptor.receive(this, callback)
     }
 
-    def >> (payload: Object) : Object = {
+    def >> (payload: AnyRef) : AnyRef = {
         "Hello, " + payload
     }
 
