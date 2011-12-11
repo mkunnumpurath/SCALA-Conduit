@@ -6,7 +6,7 @@ import java.io.StringWriter
 
 class Transformer(payload: AnyRef) {
     
-    def | [T] (targetType : Class[T]) : T = {
+    def --- [T] (targetType : Class[T]) : T = {
         // String to JAXB
         if (payload.isInstanceOf[String] && targetType.isAnnotationPresent(classOf[XmlRootElement])) {
             val xml = payload.asInstanceOf[String]
