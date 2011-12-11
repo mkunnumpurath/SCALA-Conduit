@@ -4,12 +4,18 @@ import org.scalaconduit.spi.WebServer
 import org.eclipse.jetty.server.Server
 import scala.concurrent.ops._
 
-class JettyWebServer(port : Int) extends WebServer {
+object JettyWebServer extends WebServer {
     
-    val server = new Server(port);
+    var server : Server = null
+    var port : Int = 8085
+    
+    def setPort(newPort : Int) {
+        port = newPort
+    }
     
     override def start {
         spawn {
+            server = new Server(port)
 	        server.start()
 	        server.join()
         }

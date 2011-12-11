@@ -9,10 +9,11 @@ import org.scalaconduit.jetty.JettyWebServer
 class ConduitServer {
     
     val messageHandlers = Map("jms" -> new JmsMessageHandler())
-    var webServer : WebServer = null
+    var webServer : Boolean = false
     
     def addWebServer(port : Int) = {
-        webServer = new JettyWebServer(port)
+        webServer = true
+        JettyWebServer.port = port
         this
     }
     
@@ -25,7 +26,7 @@ class ConduitServer {
      * Starts the server.
      */
     def start() = {
-        webServer.start
+        JettyWebServer.start
         this
     }
     
@@ -33,7 +34,7 @@ class ConduitServer {
      * Stops the server.
      */
     def stop() = {
-        webServer.stop
+        JettyWebServer.stop
     }
 
 }
