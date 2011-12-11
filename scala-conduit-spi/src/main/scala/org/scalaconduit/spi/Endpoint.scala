@@ -9,8 +9,8 @@ class Endpoint(original: String) {
         messageReceptor.receive(this, callback)
     }
 
-    def >> (payload: AnyRef) : AnyRef = {
-        "Hello, " + payload
+    def >> (message: AnyRef) : AnyRef = {
+        message
     }
 
 }

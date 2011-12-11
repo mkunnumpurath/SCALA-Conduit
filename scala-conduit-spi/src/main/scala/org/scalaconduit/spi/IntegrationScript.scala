@@ -2,6 +2,7 @@ package org.scalaconduit.spi
 
 class IntegrationScript {
 
-    implicit def uri(x: String) = new Endpoint(x)
+    implicit def endpoint(original: String) = new Endpoint(original)
+    implicit def transformer(payload: AnyRef) = new Transformer(payload)
 
 }
