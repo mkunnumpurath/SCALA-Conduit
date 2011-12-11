@@ -10,8 +10,8 @@ object EndpointRegistry {
         messageReceptors += protocol -> messageHandler
     }
     
-    def getMessageHandler(address : String) : MessageHandler = {
-        messageReceptors(address.split(":")(0))
+    def getMessageHandler(protocol : String) : MessageHandler = {
+        messageReceptors(protocol)
     }
 
 }
