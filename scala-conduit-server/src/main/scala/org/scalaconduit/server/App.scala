@@ -9,23 +9,35 @@ import javax.xml.bind.annotation.XmlRootElement
 object App {
   
     def main(args: Array[String]) : Unit = {
-        val server = new ConduitServer().addWebServer(8080).addProtocol("jms").start()
-        new TestScript()
-        server.stop()
+        val server = new ConduitServer().addWebServer(8080).addProtocol("http").start()
+        try {
+            new TestScript()
+        } finally {
+            server.stop()
+        }
+        
     }
 
 }
 
 class TestScript extends IntegrationScript {
-
-    "jms:stockTicker" <<< { payload => 
-        val employee = payload --- classOf[StockRequest]
-        val response = "jms:engineQueue" >>> employee
-        response --- classOf[String]
+    "http:stockTicker" <<< { payload => 
+        val stockRequest = payload --- classOf[StockRequest]
+        println("Stock request received for: " + stockRequest.symbol)
+        new StockResponse() --- classOf[String]
     }
-
+    val stockRequest = new StockRequest() --- classOf[String]
+    val response = "http://localhost:8080/stockTicker" >>>  stockRequest
+    val stockResponse = response --- classOf[StockResponse]
+    println("Stock response received: " + stockResponse.quote)
 }
 
 @XmlRootElement
 class StockRequest {
+    val symbol = "ORCL"
+}
+
+@XmlRootElement
+class StockResponse {
+    val quote = 21.23
 }

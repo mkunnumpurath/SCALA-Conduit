@@ -24,6 +24,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.1.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.scalaconduit</groupId>
 			<artifactId>scala-conduit-spi</artifactId>
 			<version>${project.version}</version>

@@ -1,6 +1,6 @@
 package org.scalaconduit.spi
 import java.net.URL
-import org.scalaconduit.jms.JmsMessageHandler
+import org.scalaconduit.http.HttpMessageHandler
 import org.scalaconduit.jetty.JettyWebServer
 
 /**
@@ -8,7 +8,7 @@ import org.scalaconduit.jetty.JettyWebServer
  */
 class ConduitServer {
     
-    val messageHandlers = Map("jms" -> new JmsMessageHandler())
+    val messageHandlers = Map("http" -> new HttpMessageHandler())
     var webServer : Boolean = false
     
     def addWebServer(port : Int) = {

@@ -45,6 +45,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.scalaconduit</groupId>
+			<artifactId>scala-conduit-http</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scalaconduit</groupId>
 			<artifactId>scala-conduit-ws</artifactId>
 			<version>${project.version}</version>
 		</dependency>

@@ -14,9 +14,9 @@ object JettyWebServer extends WebServer {
 
     var server: Server = null
     var port: Int = 8085
-    val messageReceiver = new MessageReceiver
+    var messageReceiver: MessageReceiver = null
     val callbacks = mutable.Map.empty[String, (AnyRef) => AnyRef]
-    
+
     def setPort(newPort: Int) {
         port = newPort
     }
@@ -24,8 +24,9 @@ object JettyWebServer extends WebServer {
     override def start {
         spawn {
             server = new Server(port)
-            server.start()
+            messageReceiver = new MessageReceiver()
             server.setHandler(messageReceiver)
+            server.start()
             server.join()
         }
     }
@@ -36,14 +37,15 @@ object JettyWebServer extends WebServer {
     }
 
     def register(path: String, callback: (AnyRef) => AnyRef) = {
-    	callbacks += path -> callback
+        callbacks += path -> callback
+        System.err.println("Callback registered " + path)
     }
 
     class MessageReceiver extends AbstractHandler {
-        def handle(target: String, baseRequest: Request, request: HttpServletRequest, response: HttpServletResponse) {
-            val payload = io.Source.fromInputStream(request.getInputStream()).getLines.mkString
-            val path = request.getRequestURI()
-            callbacks(path)(payload)
+        def handle(target: String, baseRequest: Request, request: HttpServletRequest, response: HttpServletResponse) : Unit = {
+            response.setStatus(HttpServletResponse.SC_OK)
+            baseRequest.setHandled(true)
+            response.getWriter().println(callbacks(request.getRequestURI().substring(1))(io.Source.fromInputStream(request.getInputStream()).getLines.mkString))
         }
     }
 
