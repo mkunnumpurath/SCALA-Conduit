@@ -30,6 +30,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.scalaconduit</groupId>
+			<artifactId>scala-conduit-jetty</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scalaconduit</groupId>
 			<artifactId>scala-conduit-spi</artifactId>
 			<version>${project.version}</version>
 		</dependency>

@@ -21,8 +21,13 @@
 		<encoding>UTF-8</encoding>
 		<scala.version>2.8.0</scala.version>
 	</properties>
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>7.2.0.v20101020</version>
+		</dependency>
 		<dependency>
 			<groupId>org.scalaconduit</groupId>
 			<artifactId>scala-conduit-spi</artifactId>
