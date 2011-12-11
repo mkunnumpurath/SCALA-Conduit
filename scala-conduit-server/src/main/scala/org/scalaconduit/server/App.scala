@@ -1,9 +1,7 @@
 package org.scalaconduit.server
 import org.scalaconduit.spi.ConduitServer
-import org.scalaconduit.jms.JmsMessageReceptor
 import org.scalaconduit.spi.IntegrationScript
 import javax.xml.bind.annotation.XmlRootElement
-import org.scalaconduit.jetty.JettyWebServer
 
 /**
  * @author ${user.name}
@@ -11,7 +9,7 @@ import org.scalaconduit.jetty.JettyWebServer
 object App {
   
     def main(args: Array[String]) : Unit = {
-        val server = new ConduitServer().addWebServer(8080).addBinding("jms").start()
+        val server = new ConduitServer().addWebServer(8080).addProtocol("jms").start()
         new TestScript()
         server.stop()
     }

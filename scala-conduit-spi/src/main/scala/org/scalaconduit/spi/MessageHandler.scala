@@ -1,7 +1,9 @@
 package org.scalaconduit.spi
 
-trait MessageReceptor {
+trait MessageHandler {
     
     def receive(endpoint : Endpoint, callback: (AnyRef) => AnyRef)
+    
+    def dispatch(endpoint : Endpoint, payload: AnyRef) : AnyRef
 
 }

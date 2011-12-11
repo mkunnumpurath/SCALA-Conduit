@@ -4,15 +4,14 @@ import scala.collection.mutable
 
 object EndpointRegistry {
     
-    val messageReceptors = mutable.Map.empty[String, MessageReceptor]
+    val messageReceptors = mutable.Map.empty[String, MessageHandler]
     
-    def register(protocol : String, messageReceptor : MessageReceptor) {
-        messageReceptors += protocol -> messageReceptor
+    def registerMessageHandler(protocol : String, messageHandler : MessageHandler) {
+        messageReceptors += protocol -> messageHandler
     }
     
-    def getMessageReceptor(address : String) : MessageReceptor = {
-        val tokens = address.split(":")
-        messageReceptors(tokens(0))
+    def getMessageHandler(address : String) : MessageHandler = {
+        messageReceptors(address.split(":")(0))
     }
 
 }

@@ -1,6 +1,6 @@
 package org.scalaconduit.spi
 import java.net.URL
-import org.scalaconduit.jms.JmsMessageReceptor
+import org.scalaconduit.jms.JmsMessageHandler
 import org.scalaconduit.jetty.JettyWebServer
 
 /**
@@ -8,7 +8,7 @@ import org.scalaconduit.jetty.JettyWebServer
  */
 class ConduitServer {
     
-    val messageReceptors = Map("jms" -> new JmsMessageReceptor())
+    val messageHandlers = Map("jms" -> new JmsMessageHandler())
     var webServer : WebServer = null
     
     def addWebServer(port : Int) = {
@@ -16,8 +16,8 @@ class ConduitServer {
         this
     }
     
-    def addBinding(protocol : String) = {
-        EndpointRegistry.register(protocol, messageReceptors(protocol))
+    def addProtocol(protocol : String) = {
+        EndpointRegistry.registerMessageHandler(protocol, messageHandlers(protocol))
         this
     }
     
