@@ -5,7 +5,7 @@ class Endpoint(original: String) {
     val address : String = original
     
     def <<< (callback: (AnyRef) => AnyRef) = {
-        val messageReceptor = ConduitServer.getMessageReceptor(address)
+        val messageReceptor = EndpointRegistry.getMessageReceptor(address)
         messageReceptor.receive(this, callback)
     }
 
