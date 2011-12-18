@@ -16,7 +16,7 @@ class HttpMessageHandler extends MessageHandler {
     
     override def dispatch(endpoint : Endpoint, payload: AnyRef) : AnyRef = {
         val httpClient = new DefaultHttpClient()
-        val httpPost = new HttpPost(endpoint.address)
+        val httpPost = new HttpPost(endpoint.address.toString())
         val entity = new StringEntity(payload.toString(), HTTP.UTF_8);
         httpPost.setEntity(entity)
         val responseHandler = new BasicResponseHandler()

@@ -2,6 +2,7 @@ package org.scalaconduit.server
 import org.scalaconduit.spi.ConduitServer
 import org.scalaconduit.spi.IntegrationScript
 import javax.xml.bind.annotation.XmlRootElement
+import java.net.URI
 
 /**
  * @author ${user.name}
@@ -21,7 +22,7 @@ object App {
 }
 
 class TestScript extends IntegrationScript {
-    "http:stockTicker" <<< { payload => 
+    "http://localhost:8080/stockTicker" <<< { payload => 
         val stockRequest = payload --- classOf[StockRequest]
         println("Stock request received for: " + stockRequest.symbol)
         new StockResponse() --- classOf[String]

@@ -32,20 +32,21 @@ object JettyWebServer extends WebServer {
     }
 
     override def stop {
-        server.stop()
-        server.destroy()
+        if (server != null) {
+	        server.stop()
+	        server.destroy()
+        }
     }
 
     def register(path: String, callback: (AnyRef) => AnyRef) = {
         callbacks += path -> callback
-        System.err.println("Callback registered " + path)
     }
 
     class MessageReceiver extends AbstractHandler {
         def handle(target: String, baseRequest: Request, request: HttpServletRequest, response: HttpServletResponse) : Unit = {
             response.setStatus(HttpServletResponse.SC_OK)
             baseRequest.setHandled(true)
-            response.getWriter().println(callbacks(request.getRequestURI().substring(1))(io.Source.fromInputStream(request.getInputStream()).getLines.mkString))
+            response.getWriter().println(callbacks(request.getRequestURI())(io.Source.fromInputStream(request.getInputStream()).getLines.mkString))
         }
     }
 

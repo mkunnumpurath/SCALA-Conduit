@@ -1,4 +1,6 @@
 package org.scalaconduit.spi
+
+import scala.collection.mutable
 import java.net.URL
 import org.scalaconduit.http.HttpMessageHandler
 import org.scalaconduit.jetty.JettyWebServer

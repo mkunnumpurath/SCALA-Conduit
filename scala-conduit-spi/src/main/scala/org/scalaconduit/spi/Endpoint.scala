@@ -1,10 +1,11 @@
 package org.scalaconduit.spi
+import java.net.URI
 
 class Endpoint(original: String) {
     
-    val address : String = original
-    val protocol = address.split(":")(0)
-    val path = address.split(":")(1)
+    val address : URI = new URI(original)
+    val protocol = address.getScheme()
+    var path = address.getPath()
     
     def <<< (callback: (AnyRef) => AnyRef) = {
         val messageHandler = EndpointRegistry.getMessageHandler(protocol)
