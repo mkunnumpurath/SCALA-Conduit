@@ -1,5 +1,6 @@
 package org.scalaconduit.server
 import org.scalaconduit.spi.ConduitServer
+import org.scalaconduit.spi.MessageUtility
 import org.scalaconduit.spi.IntegrationScript
 import javax.xml.bind.annotation.XmlRootElement
 import java.net.URI
@@ -25,9 +26,9 @@ object App {
 
 class TestScript extends IntegrationScript {
     "http://localhost:8080/stockTicker" <<< { payload => 
-        payload split("//symbol/text()", x => 
+        payload.split("//symbol/text()") { x => 
             println(x)
-        )
+        }
         new StockResponse() as classOf[String]
     }
     val stockRequest = new StockRequest()

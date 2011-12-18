@@ -13,7 +13,7 @@ import javax.xml.transform.OutputKeys
 
 class MessageUtility(payload: AnyRef) {
 
-    def split(expression: String, callback: AnyRef => Unit) : Unit = {
+    def split(expression: String) (callback: AnyRef => Unit) {
         if (payload.isInstanceOf[String]) {
             val documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder()
             val inputSource = new InputSource(new StringReader(payload.toString()))
