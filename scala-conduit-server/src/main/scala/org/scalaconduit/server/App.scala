@@ -1,11 +1,6 @@
 package org.scalaconduit.server
 
 import org.scalaconduit.spi.IntegrationScript
-import javax.xml.bind.annotation.XmlRootElement
-import java.net.URI
-import javax.xml.bind.annotation.XmlElement
-import java.util.List
-import java.util.LinkedList
 import org.w3c.dom.Document
 
 /**
