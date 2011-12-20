@@ -21,6 +21,8 @@ object App {
             server.stop()
         }
     }
+    
+    def cast[T] (source : AnyRef) = source.asInstanceOf[T]
 
 }
 
