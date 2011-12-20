@@ -8,7 +8,7 @@ import org.apache.http.impl.client.BasicResponseHandler
 import org.apache.http.entity.StringEntity
 import org.apache.http.protocol.HTTP
 
-class HttpMessageHandler extends MessageHandler {
+case class HttpMessageHandler extends MessageHandler {
 
     override def receive(uri : Endpoint, callback: (AnyRef) => AnyRef)  = {
         JettyWebServer.register(uri.path, callback)

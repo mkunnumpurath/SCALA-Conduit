@@ -1,9 +1,9 @@
 package org.scalaconduit.spi
 import java.net.URI
 
-class Endpoint(original: String) {
+case class Endpoint(url: String) {
     
-    val address : URI = new URI(original)
+    val address : URI = new URI(url)
     val protocol = address.getScheme()
     var path = address.getPath()
     

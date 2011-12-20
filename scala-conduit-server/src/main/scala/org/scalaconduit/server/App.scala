@@ -1,12 +1,12 @@
 package org.scalaconduit.server
-import org.scalaconduit.spi.ConduitServer
-import org.scalaconduit.spi.MessageUtility
+
 import org.scalaconduit.spi.IntegrationScript
 import javax.xml.bind.annotation.XmlRootElement
 import java.net.URI
 import javax.xml.bind.annotation.XmlElement
 import java.util.List
 import java.util.LinkedList
+import org.w3c.dom.Document
 
 /**
  * @author ${user.name}
@@ -14,7 +14,7 @@ import java.util.LinkedList
 object App {
   
     def main(args: Array[String]) : Unit = {
-        val server = new ConduitServer().addWebServer(8080).addProtocol("http").start()
+        val server = new ConduitServer().addWebServer(8080).addProtocol("http").addProtocol("jms").start()
         try {
             new TestScript()
         } finally {
@@ -25,27 +25,13 @@ object App {
 }
 
 class TestScript extends IntegrationScript {
-    "http://localhost:8080/stockTicker" <<< { payload => 
-        payload.split("//symbol/text()") { x => 
-            println(x)
+    
+    val employees = <employees><employee>Meeraj</employee><employee>Derek</employee></employees>
+    "http://localhost:8080/stockTicker" <<< { message =>
+        for (part <- message ~~~ classOf[Document] --< "//employee") {
+            "jms://testQueue" >>> part ~~~ classOf[String]
         }
-        new StockResponse() as classOf[String]
+        null
     }
-    val stockRequest = new StockRequest()
-    stockRequest.list.add("SUN")
-    stockRequest.list.add("ORCL")
-    val inputXml = stockRequest as classOf[String]
-    val response = "http://localhost:8080/stockTicker" >>>  inputXml
-    val stockResponse = response as classOf[StockResponse]
-    println("Stock response received: " + stockResponse)
-}
-
-@XmlRootElement
-class StockRequest {
-    @XmlElement(name = "symbol")
-    var list : List[String] = new LinkedList[String]
-}
-
-@XmlRootElement
-class StockResponse {
+    "http://localhost:8080/stockTicker" >>>  employees.toString
 }
