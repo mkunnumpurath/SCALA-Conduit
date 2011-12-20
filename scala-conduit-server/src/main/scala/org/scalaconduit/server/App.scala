@@ -26,12 +26,12 @@ object App {
 
 class TestScript extends IntegrationScript {
     
-    val employees = <employees><employee>Meeraj</employee><employee>Derek</employee></employees>
     "http://localhost:8080/stockTicker" <<< { message =>
         for (part <- message ~~~ classOf[Document] --< "//employee") {
             "jms://testQueue" >>> part ~~~ classOf[String]
         }
         null
     }
-    "http://localhost:8080/stockTicker" >>>  employees.toString
+    "http://localhost:8080/stockTicker" >>>  
+        <employees><employee>Meeraj</employee><employee>Derek</employee></employees>.toString
 }
