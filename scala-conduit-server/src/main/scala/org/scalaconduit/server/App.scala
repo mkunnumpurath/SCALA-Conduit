@@ -26,12 +26,11 @@ object App {
 
 class TestScript extends IntegrationScript {
     
-    "http://localhost:8080/stockTicker" <<< { message =>
-        for (part <- message ~~~ classOf[Document] --< "//employee") {
+    "http://localhost:8080/employee" <<< { message =>
+        for (part <- message ~~~ classOf[Document] --< "//name/text()") {
             "jms://testQueue" >>> part ~~~ classOf[String]
         }
         null
     }
-    "http://localhost:8080/stockTicker" >>>  
-        <employees><employee>Meeraj</employee><employee>Derek</employee></employees>.toString
+    "http://localhost:8080/employee" >>> <employees><name>Meeraj</name><name>Derek</name></employees>
 }
