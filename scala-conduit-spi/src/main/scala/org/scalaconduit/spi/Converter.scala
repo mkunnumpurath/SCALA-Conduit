@@ -14,20 +14,21 @@ import javax.xml.transform.TransformerFactory
 
 case class Converter(payload: AnyRef) {
 
-    def ~~~[T] (targetType: Class[T]): T = {
-
-        if (targetType == classOf[Document] && payload.isInstanceOf[String]) {
-            DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(payload.toString()))).asInstanceOf[T]
-        } else if (targetType == classOf[String] && payload.isInstanceOf[Node]) {
-            val transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes")
-            val writer = new StringWriter();
-            transformer.transform(new DOMSource(payload.asInstanceOf[Node]), new StreamResult(writer));
-            writer.toString().asInstanceOf[T]
-        } else {
-            Nil.asInstanceOf[T]
+    def ~~~[T](targetType: Class[T]): T = {
+        val documentClass = classOf[Document]
+        val stringClass = classOf[String]
+        (payload, targetType) match {
+            case (s: String, documentClass) =>
+                DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(s))).asInstanceOf[T]
+            case (n: Node, stringClass) =>
+                val transformer = TransformerFactory.newInstance().newTransformer();
+                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes")
+                val writer = new StringWriter();
+                transformer.transform(new DOMSource(n), new StreamResult(writer));
+                writer.toString().asInstanceOf[T]
+            case _ =>
+                Nil.asInstanceOf[T]
         }
-
     }
 
 }
